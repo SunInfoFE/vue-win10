@@ -1,28 +1,47 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+  <div id="win10">
+    <win10-menu></win10-menu>
+    <win10-message></win10-message>
+    <win10-taskbar></win10-taskbar>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+let Win10Menu = () => import('./components/Menu');
+let Win10Message = () => import('./components/Message');
+let Win10Taskbar = () => import('./components/Taskbar');
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Win10Menu,
+    Win10Message,
+    Win10Taskbar
   }
 };
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑;
+}
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  overflow: hidden;
+}
+#win10 {
+  width: 100%;
+  height: 100%;
+  background: black url("../static/AerialPantanal.jpg") no-repeat fixed;
+  background-size: 100% 100%;
+  position: relative;
 }
 </style>
