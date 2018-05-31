@@ -7,9 +7,9 @@
 </template>
 
 <script>
-let Win10Menu = () => import('./components/Menu');
-let Win10Message = () => import('./components/Message');
-let Win10Taskbar = () => import('./components/Taskbar');
+let Win10Menu = () => import(/* webpackChunkName: 'win10-menu' */ './components/Menu');
+let Win10Message = () => import(/* webpackChunkName: 'win10-message' */ './components/Message');
+let Win10Taskbar = () => import(/* webpackChunkName: 'win10-taskbar' */ './components/Taskbar');
 
 export default {
   name: 'App',
@@ -22,6 +22,7 @@ export default {
 </script>
 
 <style>
+@import url('../static/font/iconfont.css');
 * {
   margin: 0;
   padding: 0;
