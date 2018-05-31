@@ -1,0 +1,2 @@
+webpackJsonp([2],{sk6e:function(e,t){},yJ2L:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var s={render:function(){var e=this.$createElement;return(this._self._c||e)("div",[this._v("Message")])},staticRenderFns:[]};var r=n("VU/8")({},s,!1,function(e){n("sk6e")},null,null);t.default=r.exports}});
+//# sourceMappingURL=win10-message.59202f0204be5411a8b6.js.map
