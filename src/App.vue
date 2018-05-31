@@ -41,7 +41,7 @@ body {
 #win10 {
   width: 100%;
   height: 100%;
-  background: black url("/static/AerialPantanal.jpg") no-repeat fixed;
+  background: black url("./assets/AerialPantanal.jpg") no-repeat fixed;
   background-size: 100% 100%;
   position: relative;
 }
