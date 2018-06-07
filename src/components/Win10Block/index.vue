@@ -1,6 +1,6 @@
 <template>
-  <div class="win10-block">
-    <grid-layout :layout="layout" :col-num="colnum" :row-height="50" :is-draggable="draggable" :is-resizable="false" :is-mirrored="false" :vertical-compact="true" :margin="[10, 10]" :use-css-transforms="true">
+  <div class="win10-block" ref="win10-block">
+    <grid-layout :layout="layout" :col-num="colnum" :row-height="50" :is-draggable="draggable" :is-resizable="false" :is-mirrored="false" :vertical-compact="true" :margin="[5, 5]" :use-css-transforms="true">
       <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i" @resized="resized" @moved="moved" @move="move">
         <div :class="['win10-block-container','fade']">
           <Tmp1 v-if="item.type === 1" :name="item.i" :model="item.model" />
@@ -74,18 +74,6 @@ export default {
       }
     }
   },
-  watch: {
-    colnum(val) {
-      if (!this.timer) {
-        this.colnum = val
-        this.timer = true
-        let that = this
-        setTimeout(function () {
-          that.timer = false
-        }, 400)
-      }
-    }
-  },
   props: {
     layout: {
       type: Array,
@@ -135,7 +123,7 @@ export default {
   },
   methods: {
     init() {
-      this.colnum = parseInt(window.innerWidth / 60)
+      this.colnum = parseInt(this.$refs['win10-block'].offsetWidth / 60)
       // 1. layout宽度由哪一行确定
       let layoutY = []
       this.layout.map(item => {
@@ -266,7 +254,7 @@ export default {
   cursor: pointer;
 }
 .win10-block-tmp-mask:hover {
-  border: 1px solid #fff;
+  border: 2px solid #fff;
 }
 .win10-block-tmp-mask:active {
   cursor: move;
@@ -276,9 +264,9 @@ export default {
   width: 100%;
   height: 100%;
 }
-.win10-block-container:active {
+/* .win10-block-container:active {
   box-shadow: 0px 5px 20px rgb(151, 148, 148);
-}
+} */
 .win10-block-tmp .tmp-wrap.fade {
   -moz-transition: all 1s cubic-bezier(0.23, -0.01, 0.18, 1.01);
   -webkit-transition: all 1s cubic-bezier(0.23, -0.01, 0.18, 1.01);
