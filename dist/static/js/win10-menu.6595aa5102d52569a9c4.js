@@ -1,2 +1,0 @@
-webpackJsonp([1],{PyKc:function(e,n){},ccZh:function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var c={render:function(){var e=this.$createElement;return(this._self._c||e)("div",{staticClass:"win10-menu"},[this._v("menu")])},staticRenderFns:[]};var s=t("VU/8")({},c,!1,function(e){t("PyKc")},null,null);n.default=s.exports}});
-//# sourceMappingURL=win10-menu.6595aa5102d52569a9c4.js.map

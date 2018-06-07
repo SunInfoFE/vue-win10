@@ -1,5 +1,6 @@
 <template>
   <div id="win10">
+    <win10-window></win10-window>
     <win10-menu></win10-menu>
     <win10-message></win10-message>
     <win10-taskbar></win10-taskbar>
@@ -7,6 +8,7 @@
 </template>
 
 <script>
+let Win10Window = () => import(/* webpackChunkName: 'win10-window' */ './components/Window');
 let Win10Menu = () => import(/* webpackChunkName: 'win10-menu' */ './components/Menu');
 let Win10Message = () => import(/* webpackChunkName: 'win10-message' */ './components/Message');
 let Win10Taskbar = () => import(/* webpackChunkName: 'win10-taskbar' */ './components/Taskbar');
@@ -14,6 +16,7 @@ let Win10Taskbar = () => import(/* webpackChunkName: 'win10-taskbar' */ './compo
 export default {
   name: 'App',
   components: {
+    Win10Window,
     Win10Menu,
     Win10Message,
     Win10Taskbar

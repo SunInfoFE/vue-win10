@@ -1,7 +1,7 @@
 <template>
   <div class="win10-taskbar">
     <div class="win10-taskbar-group-left">
-      <div class="win10-taskbar-btn">
+      <div class="win10-taskbar-btn" @click="handleWinBtn">
         <i class="s-icon-windows"></i>
       </div>
     </div>
@@ -10,7 +10,7 @@
     </div>
     <div class="win10-taskbar-group-right">
       <div class="win10-taskbar-btn win10-taskbar-time" v-html="display"></div>
-      <div class="win10-taskbar-btn">
+      <div class="win10-taskbar-btn" @click="handleMessageBtn">
         <i class="s-icon-message"></i>
       </div>
       <div class="win10-taskbar-btn-show-desktop" title="显示桌面"></div>
@@ -40,6 +40,14 @@ export default {
     setInterval(() => {
       this.time = Date.now();
     }, 1000);
+  },
+  methods: {
+    handleWinBtn () {
+      this.$store.commit('toggleWin');
+    },
+    handleMessageBtn () {
+      this.$store.commit('toggleMessage');
+    }
   }
 };
 </script>
