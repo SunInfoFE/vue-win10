@@ -41,7 +41,13 @@ export default {
       let MM = date.getMonth() + 1;
       let dd = date.getDay();
       let hh = date.getHours();
+      if (hh < 10) {
+        hh = '0' + hh;
+      }
       let mm = date.getMinutes();
+      if (mm < 10) {
+        mm = '0' + mm;
+      }
       return `${hh}:${mm}<br>${yyyy}/${MM}/${dd}`;
     }
   },

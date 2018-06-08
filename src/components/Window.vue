@@ -7,8 +7,22 @@
           top: position.top + 'px'
         }">
     <div class="win10-window-header" @mousedown="mousedown($event, 'move')">
-      <div>{{title}}</div>
-
+      <div class="win10-window-title" v-text="title"></div>
+      <div class="win10-window-header-right">
+        <win10-button
+            icon="min"
+            title="最小化">
+        </win10-button>
+        <win10-button
+            :icon="fullScreen ? 'window-restore' : 'window-max'"
+            title="最大化"
+            @click="handleZoom">
+        </win10-button>
+        <win10-button
+            icon="window-close"
+            title="关闭">
+        </win10-button>
+      </div>
     </div>
     <div class="win10-window-body"></div>
     <div class="win10-window-top-left" @mousedown="mousedown($event, 'tl')"></div>
@@ -23,7 +37,12 @@
 </template>
 
 <script>
+let Win10Button = () => import('./Button');
+
 export default {
+  components: {
+    Win10Button
+  },
   props: {
     title: {
       type: String,
@@ -47,7 +66,8 @@ export default {
       position: {
         left: 100,
         top: 100
-      }
+      },
+      fullScreen: false
     };
   },
   methods: {
@@ -111,6 +131,9 @@ export default {
         document.onmousemove = null;
         document.onmouseup = null;
       };
+    },
+    handleZoom () {
+      this.fullScreen = !this.fullScreen;
     }
   }
 };
@@ -124,11 +147,18 @@ export default {
   flex-direction: column;
 }
 .win10-window-header {
-  height: 38px;
-  padding: 8px;
-  cursor: move ;
+  height: 40px;
+  line-height: 40px;
   background-color: rgba(49, 49, 50, 0.9);
   color: #fff;
+  display: flex;
+}
+.win10-window-title {
+  flex: 1;
+  padding-left: 10px;
+}
+.win10-window-header-right .win10-button {
+  float: left;
 }
 .win10-window-body {
   background-color: #fff;
