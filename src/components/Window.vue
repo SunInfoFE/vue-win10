@@ -6,16 +6,16 @@
           left: position.left + 'px',
           top: position.top + 'px'
         }">
-    <div class="win10-window-header" @mousedown="mousedown($event, 'move')"></div>
+    <div class="win10-window-header" @mousedown="mousedown($event, 'move')">{{title}}</div>
     <div class="win10-window-body"></div>
     <div class="win10-window-top-left" @mousedown="mousedown($event, 'tl')"></div>
-    <div class="win10-window-top"></div>
+    <div class="win10-window-top" @mousedown="mousedown($event, 'top')"></div>
     <div class="win10-window-top-right" @mousedown="mousedown($event, 'tr')"></div>
-    <div class="win10-window-right"></div>
+    <div class="win10-window-right" @mousedown="mousedown($event, 'right')"></div>
     <div class="win10-window-bottom-left" @mousedown="mousedown($event, 'bl')"></div>
-    <div class="win10-window-bottom"></div>
+    <div class="win10-window-bottom" @mousedown="mousedown($event, 'bottom')"></div>
     <div class="win10-window-bottom-right" @mousedown="mousedown($event, 'br')"></div>
-    <div class="win10-window-left"></div>
+    <div class="win10-window-left" @mousedown="mousedown($event, 'left')"></div>
   </div>
 </template>
 
@@ -80,6 +80,20 @@ export default {
         } else if (direction === 'move') {
           that.position.left += (e.clientX - disX);
           that.position.top += (e.clientY - disY);
+        } else if (direction === 'top') {
+          that.size.height += (disY - e.clientY);
+          if (that.size.height > that.minHeight) {
+            that.position.top -= (disY - e.clientY);
+          }
+        } else if (direction === 'right') {
+          that.size.width += (e.clientX - disX);
+        } else if (direction === 'bottom') {
+          that.size.height += (e.clientY - disY);
+        } else if (direction === 'left') {
+          that.size.width += (disX - e.clientX);
+          if (that.size.width > that.minWidth) {
+            that.position.left -= (disX - e.clientX);
+          }
         }
         disX = e.clientX;
         disY = e.clientY;
@@ -110,8 +124,11 @@ export default {
   height: 38px;
   padding: 8px;
   cursor: move ;
+  background-color: rgba(49, 49, 50, 0.9);
+  color: #fff;
 }
 .win10-window-body {
+  background-color: #fff;
   flex: 1;
 }
 .win10-window-top-left {
