@@ -56,27 +56,41 @@ export default {
         if (direction === 'tl') {
           that.size.width += (disX - e.clientX);
           that.size.height += (disY - e.clientY);
-          that.position.left -= (disX - e.clientX);
-          that.position.top -= (disY - e.clientY);
+          if (that.size.width > that.minWidth) {
+            that.position.left -= (disX - e.clientX);
+          }
+          if (that.size.height > that.minHeight) {
+            that.position.top -= (disY - e.clientY);
+          }
         } else if (direction === 'tr') {
           that.size.width += (e.clientX - disX);
           that.size.height += (disY - e.clientY);
-          that.position.top -= (disY - e.clientY);
+          if (that.size.height > that.minHeight) {
+            that.position.top -= (disY - e.clientY);
+          }
         } else if (direction === 'bl') {
           that.size.width += (disX - e.clientX);
           that.size.height += (e.clientY - disY);
-          that.position.left -= (disX - e.clientX);
+          if (that.size.width > that.minWidth) {
+            that.position.left -= (disX - e.clientX);
+          }
         } else if (direction === 'br') {
           that.size.width += (e.clientX - disX);
           that.size.height += (e.clientY - disY);
         }
         disX = e.clientX;
         disY = e.clientY;
-      }
+        if (that.size.width <= that.minWidth) {
+          that.size.width = that.minWidth;
+        }
+        if (that.size.height <= that.minHeight) {
+          that.size.height = that.minHeight;
+        }
+      };
       document.onmouseup = function () {
         document.onmousemove = null;
         document.onmouseup = null;
-      }
+      };
     }
   }
 };
