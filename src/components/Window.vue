@@ -6,7 +6,10 @@
           left: position.left + 'px',
           top: position.top + 'px'
         }">
-    <div class="win10-window-header" @mousedown="mousedown($event, 'move')">{{title}}</div>
+    <div class="win10-window-header" @mousedown="mousedown($event, 'move')">
+      <div>{{title}}</div>
+
+    </div>
     <div class="win10-window-body"></div>
     <div class="win10-window-top-left" @mousedown="mousedown($event, 'tl')"></div>
     <div class="win10-window-top" @mousedown="mousedown($event, 'top')"></div>
