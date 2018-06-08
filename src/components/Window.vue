@@ -1,19 +1,20 @@
 <template>
-  <div class="win10-window">
+  <div class="win10-window"
+       :style="{
+          width: size.width + 'px',
+          height: size.height + 'px',
+          left: position.left + 'px',
+          top: position.top + 'px'
+        }">
     <div class="win10-window-header" v-text="title"></div>
     <div class="win10-window-body"></div>
-    <div class="win10-window-top-left"></div>
+    <div class="win10-window-top-left" @mousedown="mousedown($event, 'tl')"></div>
     <div class="win10-window-top"></div>
-    <div class="win10-window-top-right"></div>
+    <div class="win10-window-top-right" @mousedown="mousedown($event, 'tr')"></div>
     <div class="win10-window-right"></div>
-    <div class="win10-window-bottom-left"></div>
+    <div class="win10-window-bottom-left" @mousedown="mousedown($event, 'bl')"></div>
     <div class="win10-window-bottom"></div>
-    <div class="win10-window-bottom-right"
-         :style="{right: bottomRight.right + 'px', bottom: bottomRight.bottom + 'px'}"
-         @mousedown="mousedown"
-         @mousemove="mousemove"
-         @mouseup="mouseup">
-    </div>
+    <div class="win10-window-bottom-right" @mousedown="mousedown($event, 'br')"></div>
     <div class="win10-window-left"></div>
   </div>
 </template>
@@ -24,39 +25,58 @@ export default {
     title: {
       type: String,
       default: 'Title'
+    },
+    minWidth: {
+      type: Number,
+      default: 200
+    },
+    minHeight: {
+      type: Number,
+      default: 200
     }
   },
   data () {
     return {
-      bottomRight: {
-        right: -8,
-        bottom: -8
+      size: {
+        width: 400,
+        height: 300
       },
-      temp: {
-        orgX: 0,
-        orgY: 0
+      position: {
+        left: 100,
+        top: 100
       }
     };
   },
   methods: {
-    mousedown (e) {
-      this.temp.orgX = e.clientX;
-      this.temp.orgY = e.clientY;
-      console.log(e.clientX);
-      console.log(e.clientY);
-    },
-    mousemove (e) {
-      // this.bottomRight.right = this.bottomRight.right + (e.clientX - this.temp.orgX);
-      // this.bottomRight.bottom = this.bottomRight.bottom + (e.clientY - this.temp.orgY);
-      // let x = e.clientX - this.temp.orgX;
-      // let y = e.clientY - this.temp.orgY;
-      console.log(e.clientX);
-      console.log(e.clientY);
-      console.log(e.clientX - this.temp.orgX);
-      console.log(e.clientY - this.temp.orgY);
-    },
-    mouseup (e) {
-      //
+    mousedown (e, direction) {
+      let that = this;
+      let disX = e.clientX;
+      let disY = e.clientY;
+      document.onmousemove = function (e) {
+        if (direction === 'tl') {
+          that.size.width += (disX - e.clientX);
+          that.size.height += (disY - e.clientY);
+          that.position.left -= (disX - e.clientX);
+          that.position.top -= (disY - e.clientY);
+        } else if (direction === 'tr') {
+          that.size.width += (e.clientX - disX);
+          that.size.height += (disY - e.clientY);
+          that.position.top -= (disY - e.clientY);
+        } else if (direction === 'bl') {
+          that.size.width += (disX - e.clientX);
+          that.size.height += (e.clientY - disY);
+          that.position.left -= (disX - e.clientX);
+        } else if (direction === 'br') {
+          that.size.width += (e.clientX - disX);
+          that.size.height += (e.clientY - disY);
+        }
+        disX = e.clientX;
+        disY = e.clientY;
+      }
+      document.onmouseup = function () {
+        document.onmousemove = null;
+        document.onmouseup = null;
+      }
     }
   }
 };
@@ -64,12 +84,8 @@ export default {
 
 <style>
 .win10-window {
-  width: 800px;
-  height: 600px;
   background-color: #795da3;
   position: absolute;
-  top: 100px;
-  left: 100px;
   display: flex;
   flex-direction: column;
 }
@@ -130,10 +146,11 @@ export default {
 }
 .win10-window-bottom-right {
   position: absolute;
+  right: -8px;
+  bottom: -8px;
   width: 16px;
   height: 16px;
   cursor: nwse-resize;
-  background-color: #63a35c;
 }
 .win10-window-left {
   position: absolute;
