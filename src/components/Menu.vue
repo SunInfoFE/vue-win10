@@ -32,7 +32,7 @@
       <div class="menu_group">
         <Win10Block :layout="layout" @setlayout="setlayout" @blockClick="blockClick" @editSize="editSize" @deleteItem="deleteItem"></Win10Block>
         <div class="title">应用场景</div>
-        
+
       </div>
       <div class="menu_group">
         <div class="title">应用场景</div>
@@ -181,16 +181,16 @@ export default {
   margin-right: 30px;
 }
 .win10-menu .menu_group:hover .title::after {
-    font: normal normal normal 14px/1 FontAwesome;
-    content: "\f0c9";
-    line-height: inherit;
-    float: right;
-    margin-right: 17px;
-    color: grey;
+  font: normal normal normal 14px/1 FontAwesome;
+  content: "\f0c9";
+  line-height: inherit;
+  float: right;
+  margin-right: 17px;
+  color: grey;
 }
 .win10-menu .menu_group .title {
-    padding: 5px;
-    padding-top: 12px;
-    font-size: 13px;
+  padding: 5px;
+  padding-top: 12px;
+  font-size: 13px;
 }
 </style>
