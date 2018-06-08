@@ -6,7 +6,7 @@
           left: position.left + 'px',
           top: position.top + 'px'
         }">
-    <div class="win10-window-header" v-text="title"></div>
+    <div class="win10-window-header" @mousedown="mousedown($event, 'move')"></div>
     <div class="win10-window-body"></div>
     <div class="win10-window-top-left" @mousedown="mousedown($event, 'tl')"></div>
     <div class="win10-window-top"></div>
@@ -77,6 +77,9 @@ export default {
         } else if (direction === 'br') {
           that.size.width += (e.clientX - disX);
           that.size.height += (e.clientY - disY);
+        } else if (direction === 'move') {
+          that.position.left += (e.clientX - disX);
+          that.position.top += (e.clientY - disY);
         }
         disX = e.clientX;
         disY = e.clientY;
@@ -106,6 +109,7 @@ export default {
 .win10-window-header {
   height: 38px;
   padding: 8px;
+  cursor: move ;
 }
 .win10-window-body {
   flex: 1;
