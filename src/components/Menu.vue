@@ -29,16 +29,7 @@
         <i class="black icon fa fa-power-off fa-fw"></i>关闭</div>
     </div>
     <div class="blocks">
-      <div class="menu_group">
-        <Win10Block :layout="layout" @setlayout="setlayout" @blockClick="blockClick" @editSize="editSize" @deleteItem="deleteItem"></Win10Block>
-        <div class="title">应用场景</div>
-
-      </div>
-      <div class="menu_group">
-        <div class="title">应用场景</div>
-        <Win10Block :layout="layout" @setlayout="setlayout" @blockClick="blockClick" @editSize="editSize" @deleteItem="deleteItem"></Win10Block>
-      </div>
-
+      <Win10Block :layout="layout" @setlayout="setlayout" @blockClick="blockClick" @editSize="editSize" @deleteItem="deleteItem"></Win10Block>
     </div>
   </div>
 </template>

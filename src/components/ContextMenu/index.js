@@ -1,7 +1,7 @@
-import ContextMenuComponent from './ContextMenu.vue'
+import ContextMenuComponent from './ContextMenu.vue';
 const ContextMenu = {
   install: function (Vue) {
-    Vue.component('ContextMenu', ContextMenuComponent)
+    Vue.component('ContextMenu', ContextMenuComponent);
   }
-}
-export default ContextMenu
+};
+export default ContextMenu;

@@ -1,7 +1,8 @@
 <template>
   <div class="win10-block" ref="win10-block">
     <grid-layout :layout="layout" :col-num="colnum" :row-height="50" :is-draggable="draggable" :is-resizable="false" :is-mirrored="false" :vertical-compact="true" :margin="[5, 5]" :use-css-transforms="true">
-      <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i" @resized="resized" @moved="moved" @move="move">
+      <div>
+        <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i" @resized="resized" @moved="moved" @move="move">
         <div :class="['win10-block-container','fade']">
           <Tmp1 v-if="item.type === 1" :name="item.i" :model="item.model" />
           <Tmp2 v-if="item.type === 2" :name="item.i" :model="item.model" />
@@ -9,6 +10,7 @@
           <div class="win10-block-tmp-mask" :data-index="item.i" @click="blockClick(item)" @contextmenu="showMenu" />
         </div>
       </grid-item>
+      </div>
     </grid-layout>
     <context-menu :contextMenuData="contextMenuData" @small="editSize('small')" @mid="editSize('mid')" @big="editSize('big')" @deleteItem="deleteItem()">
     </context-menu>
@@ -19,6 +21,7 @@
 /* eslint-disable */
 import { Tmp1, Tmp2, Tmp3 } from './Tmp'
 import { GridLayout, GridItem } from 'vue-grid-layout'
+
 export default {
   name: 'Win10Block',
   data() {
@@ -123,7 +126,8 @@ export default {
   },
   methods: {
     init() {
-      this.colnum = parseInt(this.$refs['win10-block'].offsetWidth / 60)
+      this.colnum = parseInt(this.$refs['win10-block'].offsetWidth / 55)
+      console.log(this.colnum)
       // 1. layout宽度由哪一行确定
       let layoutY = []
       this.layout.map(item => {

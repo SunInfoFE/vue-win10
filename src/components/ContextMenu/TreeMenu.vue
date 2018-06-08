@@ -18,7 +18,7 @@ export default {
         x: 0,
         y: 0
       }
-    }
+    };
   },
   props: {
     child: {
@@ -27,11 +27,11 @@ export default {
     },
     axios: {
       type: Object,
-      default: { x: 0, y: 0 }
+      default: () => ({ x: 0, y: 0 })
     },
     parentaxios: {
       type: Object,
-      default: { x: 0, y: 0 }
+      default: () => ({ x: 0, y: 0 })
     },
     name: {
       type: String,
@@ -40,51 +40,51 @@ export default {
   },
   watch: {
     'axios'(val) {
-      var x = this.parentaxios.x
-      var y = this.parentaxios.y
-      var menu = document.getElementsByClassName(`vue-contextmenuName-${this.name}`)[0];
+      const x = this.parentaxios.x;
+      const y = this.parentaxios.y;
+      let menu = document.getElementsByClassName(`vue-contextmenuName-${this.name}`)[0];
       if (menu.childNodes.length !== 0) {
-        menu.style.display = 'block'
-        menu.style.left = (x + 150) + 'px'
-        menu.style.top = (y) + 'px'
+        menu.style.display = 'block';
+        menu.style.left = (x + 150) + 'px';
+        menu.style.top = (y) + 'px';
       }
       document.addEventListener('mouseup', function (e) {
         // 解决mac电脑在鼠标右键后会执行mouseup事件
         if (e.button === 0) {
-          menu.style.display = 'none'
+          menu.style.display = 'none';
         }
-      }, false)
+      }, false);
     }
   },
   methods: {
     fnHandler(item) {
       if (!item.child || item.child.length === 0) {
-        this.$emit('fnHandler', item)
+        this.$emit('fnHandler', item);
       }
     },
     mouseenter(item, e) {
       if (!item.child || item.child.length === 0) {
-        return null
+        return null;
       } else {
-        let x = e.clientX
-        let y = e.clientY
+        let x = e.clientX;
+        let y = e.clientY;
         this.newaxios = {
           x, y
-        }
+        };
       }
     },
     mouseleave(item, e) {
       if (!item.child || item.child.length === 0) {
-        return null
+        return null;
       } else {
-        let childmenu = this.$refs[item.menuName][0].$refs[`vue-contextmenuName-${item.menuName}`]
-        childmenu.style.display = 'none'
-        childmenu.style.left = null
-        childmenu.style.top = null
+        let childmenu = this.$refs[item.menuName][0].$refs[`vue-contextmenuName-${item.menuName}`];
+        childmenu.style.display = 'none';
+        childmenu.style.left = null;
+        childmenu.style.top = null;
       }
     }
   }
-}
+};
 </script>
 <style>
 .vue-contextmenu-listWrapper {
