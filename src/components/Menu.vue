@@ -35,6 +35,7 @@
 </template>
 
 <script>
+// import MenuList from './MenuList'
 import Win10Block from '@/components/Win10Block/index';
 import defaultdata from './default';
 
@@ -55,6 +56,7 @@ export default {
   methods: {
     setlayout(arr) {
       this.layout = arr;
+      console.log(JSON.stringify(arr));
       // window.localStorage.block = JSON.stringify(arr)
     },
     editSize(size, index) {
@@ -130,7 +132,7 @@ export default {
 
 <style>
 .win10-menu {
-  width: 750px;
+  width: 800px;
   height: 480px;
   position: fixed;
   bottom: -480px;
@@ -150,38 +152,34 @@ export default {
   height: 100%;
 }
 .win10-menu .blocks {
-  max-width: 720px;
-  width: calc(100% - 180px);
+  max-width: 770px;
+  width: calc(100% - 230px);
+  margin-top: 40px;
 }
 .win10-menu .list,
 .blocks {
   float: left;
-  width: 180px;
+  width: 230px;
   height: 100%;
   overflow: auto;
   -webkit-animation-duration: 0.5s;
   animation-duration: 0.5s;
 }
-.win10-menu .menu_group {
-  float: left;
-  width: 245px;
-  color: white;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 20px;
-  margin-right: 30px;
+
+.win10-menu .list .item, .sub-item {
+    color: white;
+    margin: 1px 0;
+    line-height: 40px;
+    padding: 0 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    transition: background-color 0.3s;
+    position: relative;
+    width: calc(100% - 20px);
 }
-.win10-menu .menu_group:hover .title::after {
-  font: normal normal normal 14px/1 FontAwesome;
-  content: "\f0c9";
-  line-height: inherit;
-  float: right;
-  margin-right: 17px;
-  color: grey;
+
+.win10-menu .list .item:hover, .sub-item:hover {
+background: rgba(189, 187, 187, 0.3);
 }
-.win10-menu .menu_group .title {
-  padding: 5px;
-  padding-top: 12px;
-  font-size: 13px;
-}
+
 </style>

@@ -1,8 +1,7 @@
 <template>
   <div class="win10-block" ref="win10-block">
     <grid-layout :layout="layout" :col-num="colnum" :row-height="50" :is-draggable="draggable" :is-resizable="false" :is-mirrored="false" :vertical-compact="true" :margin="[5, 5]" :use-css-transforms="true">
-      <div>
-        <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i" @resized="resized" @moved="moved" @move="move">
+      <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i" @resized="resized" @moved="moved" @move="move">
         <div :class="['win10-block-container','fade']">
           <Tmp1 v-if="item.type === 1" :name="item.i" :model="item.model" />
           <Tmp2 v-if="item.type === 2" :name="item.i" :model="item.model" />
@@ -10,7 +9,6 @@
           <div class="win10-block-tmp-mask" :data-index="item.i" @click="blockClick(item)" @contextmenu="showMenu" />
         </div>
       </grid-item>
-      </div>
     </grid-layout>
     <context-menu :contextMenuData="contextMenuData" @small="editSize('small')" @mid="editSize('mid')" @big="editSize('big')" @deleteItem="deleteItem()">
     </context-menu>
@@ -28,14 +26,10 @@ export default {
     return {
       blockindex: 0,
       colnum: 1,
-      timer: false,
-      totalY: 0,
-      prevlayout: [],
-      layoutwidth: 0,
+      containerWidth: 0,
       draggable: true,
       newlayout: [],
-      isActive: false,
-      ismoved:false,
+      ismoved: false,
       contextMenuData: {
         menuName: 'demo',
         axios: {
@@ -84,73 +78,10 @@ export default {
     }
   },
   components: { GridLayout, GridItem, Tmp1, Tmp2, Tmp3 },
-  watch: {
-    colnum(val) {
-      // 写到watch内只监测整型变换，减少监测浮点类型所用开销。
-      if (this.layoutwidth > val) {
-        let arr = []
-        let newlayoutlast = this.newlayout[this.newlayout.length - 1]
-        this.layout.map((item, index) => {
-          if (item.i === newlayoutlast.i) {
-            let obj = Object.assign({}, item)
-            obj.x = 0
-            obj.y = newlayoutlast.h
-            arr.push(obj)
-          } else {
-            arr.push(item)
-          }
-        })
-        if (this.prevlayout.length === 0) {
-          this.prevlayout = this.layout
-        }
-        this.$emit('setlayout', arr);
-      } else if (this.layoutwidth < val) {
-        if (this.prevlayout.length === 0) {
-          this.prevlayout = this.layout
-        } else {
-          let arr = []
-          let i = 0;
-          this.layout.map((item, index) => {
-            if (item !== this.prevlayout[index]) {
-              let obj = Object.assign({}, item)
-              obj = this.prevlayout[index]
-              arr.push(obj)
-            } else {
-              arr.push(item)
-            }
-          })
-          this.$emit('setlayout', arr);
-        }
-      }
-    }
-  },
   methods: {
     init() {
       this.colnum = parseInt(this.$refs['win10-block'].offsetWidth / 55)
-      console.log(this.colnum)
-      // 1. layout宽度由哪一行确定
-      let layoutY = []
-      this.layout.map(item => {
-        layoutY.push(item.y)
-      })
-      let json = layoutY.reduce((m, n) => (m[n]++ || (m[n] = 1), m), {})
-      let number = ''
-      let num = 0
-      for (let j in json) {
-        if (json[j] > num) {
-          num = json[j]
-          number = j
-        }
-      }
-      // 2. 取到确定宽度的行，对当前数组是那一行的总宽度进行计算
-      this.layoutwidth = 0
-      this.newlayout = []
-      this.layout.map(item => {
-        if (item.y === parseInt(number)) {
-          this.layoutwidth += item.w
-          this.newlayout.push(item);
-        }
-      })
+      this.containerWidth = parseInt(this.$refs['win10-block'].offsetWidth)
     },
     move() {
       this.ismoved = true  // 修复点击事件和移动事件重复的bug
@@ -205,15 +136,14 @@ export default {
       this.$emit('deleteItem', this.blockindex)
     },
     blockClick(item) {
-      if(this.ismoved) {
+      if (this.ismoved) {
         return
       }
       this.$emit('blockClick', item)
     }
   },
   mounted() {
-    this.init()
-    window.addEventListener('resize', this.init)
+    this.init();
   },
   beforeUpdate() {
   }
