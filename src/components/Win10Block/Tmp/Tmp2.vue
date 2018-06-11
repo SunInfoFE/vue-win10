@@ -38,17 +38,21 @@ export default {
       return this.model.length * 110;
     },
     getRandom() {
-      return Math.floor(Math.random() * 40);
+      return Math.floor(Math.random() * 5000);
     },
     slide() {
       this.tmpWrapHeight = this.getTmpWrapHeight();
       if (this.model.length > 1) {
-        let time = 1000;
-        for (let i = 0; i < this.model.length - 1; i++) {
+        let time = 2000;
+        for (let i = 0; i < (this.model.length - 1) * 2; i++) {
           (() => {
-            time += this.getRandom() * 1000 + 2000;
+            time += this.getRandom() * 10 + this.getRandom() * 10 + 2000;
             setTimeout(() => {
-              this.tmpWrapTop += -110;
+              if (i / (this.model.length - 1) * 2 < 0.5) {
+                this.tmpWrapTop += -110;
+              } else {
+                this.tmpWrapTop += 110;
+              }
             }, time);
           })();
         }

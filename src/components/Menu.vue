@@ -1,34 +1,9 @@
 <template>
   <div class="win10-menu" :style="{bottom: bottom}">
-    <div class="list win10-menu-hidden animated animated-slideOutLeft">
-      <div class="item">
-        <i class="red icon fa fa-wrench fa-fw"></i>
-        <span>API测试</span>
-      </div>
-      <div class="sub-item" onclick="Win10.openUrl('./child.html','子页')">父子页沟通</div>
-      <div class="sub-item" onclick="Win10.commandCenterOpen()">打开消息中心</div>
-      <div class="sub-item" onclick="Win10.newMsg('API测试','通过API可以发送消息至消息中心，自定义标题与内容(点击我试试)',function() {alert('click')})">发送带回调的消息</div>
-      <div class="sub-item" onclick="Win10.menuClose()">关闭菜单</div>
-      <div class="item">
-        <i class="blue icon fa fa-gavel fa-fw"></i>辅助工具</div>
-      <div class="sub-item" onclick="Win10.openUrl('win10ui.yuri2.cn/src/tools/builder-shortcut.html','图标代码生成器')">桌面图标代码生成器</div>
-      <div class="sub-item" onclick="Win10.openUrl('win10ui.yuri2.cn/src/tools/builder-tile.html','磁贴代码生成器')">磁贴代码生成器</div>
-      <div class="sub-item" onclick="Win10.openUrl('win10ui.yuri2.cn/src/tools/builder-menu.html','菜单代码生成器')">菜单代码生成器</div>
-      <div class="item" onclick="Win10.aboutUs()">
-        <i class="purple icon fa fa-info-circle fa-fw"></i>关于</div>
-      <div class="item" onclick="layer.open({
-                title:'支持作者',
-                type: 1,
-                area:'300px',
-                offset:'50px',
-                shadeClose:true,
-                content: '<img width=\'300\' src=\'./img/presentation/donation.jpg\' />'
-            })">
-        <i class="green icon fa fa-thumbs-up fa-fw"></i>捐赠</div>
-      <div class="item" onclick=" Win10.exit();">
-        <i class="black icon fa fa-power-off fa-fw"></i>关闭</div>
+    <div class="list scrollbar">
+      <Win10MenuList v-for="(item,index) in menuList" :key="index" :menuItem="item"></Win10MenuList>
     </div>
-    <div class="blocks">
+    <div class="blocks scrollbar">
       <Win10Block :layout="layout" @setlayout="setlayout" @blockClick="blockClick" @editSize="editSize" @deleteItem="deleteItem"></Win10Block>
     </div>
   </div>
@@ -37,16 +12,71 @@
 <script>
 // import MenuList from './MenuList'
 import Win10Block from '@/components/Win10Block/index';
+import Win10MenuList from '@/components/Win10MenuList';
 import defaultdata from './default';
 
 export default {
   data() {
+    const _this = this;
     return {
-      layout: defaultdata
+      layout: defaultdata,
+      menuList: [
+        {
+          title: 'api测试',
+          icon: require('../assets/logo.png'),
+          iconColor: '#FF5722',
+          level: 1,
+          click: _this.menuListClick,
+          children: [
+            {
+              title: '父子沟通',
+              icon: require('../assets/logo.png'),
+              level: 2
+            },
+            {
+              title: '打开消息中心',
+              icon: require('../assets/logo.png'),
+              level: 2
+            },
+            {
+              title: '返回带回调消息',
+              icon: require('../assets/logo.png'),
+              level: 2
+            }
+          ]
+        },
+        {
+          title: '辅助工具',
+          icon: require('../assets/logo.png'),
+          level: 1,
+          iconColor: '#1E9FFF',
+          click: _this.menuListClick,
+          children: [
+            {
+              title: '父子沟通',
+              icon: require('../assets/logo.png'),
+              level: 2
+            },
+            {
+              title: '打开消息中心',
+              icon: require('../assets/logo.png'),
+              level: 2
+            },
+            {
+              title: '返回带回调消息',
+              icon: require('../assets/logo.png'),
+              level: 2
+            }
+          ]
+        },
+        { title: '关于', icon: 'fa-info-circle', level: 1, iconColor: '#1E9FFF', click: _this.menuListClick },
+        { title: '捐赠', icon: require('../assets/logo.png'), level: 1, iconColor: '#1E9FFF', click: _this.menuListClick },
+        { title: '关闭', icon: 'fa-power-off', level: 1, iconColor: '#1E9FFF', click: _this.menuListClick }
+      ]
     };
   },
   components: {
-    Win10Block
+    Win10Block, Win10MenuList
   },
   computed: {
     bottom() {
@@ -56,7 +86,6 @@ export default {
   methods: {
     setlayout(arr) {
       this.layout = arr;
-      console.log(JSON.stringify(arr));
       // window.localStorage.block = JSON.stringify(arr)
     },
     editSize(size, index) {
@@ -125,6 +154,23 @@ export default {
       setTimeout(() => {
         this.diypageopacity = 1;
       }, 100);
+    },
+    menuListClick(type, params) {
+      // type必须，params可选
+      if (!type) return null;
+      switch (type) {
+        case '关闭':
+          alert('关机');
+          break;
+        case '捐赠':
+          alert('捐赠');
+          break;
+        case '关于':
+          alert('关于');
+          break;
+        default:
+          break;
+      }
     }
   }
 };
@@ -132,20 +178,19 @@ export default {
 
 <style>
 .win10-menu {
-  width: 800px;
+  width: 790px;
   height: 480px;
   position: fixed;
   bottom: -480px;
   left: 0;
   color: white;
   background-color: rgba(19, 23, 28, 0.8);
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   z-index: 8;
   transition: all 0.5s;
 }
 .win10-menu .list {
-  width: 240px;
+  width: 210px;
   padding: 0 10px;
   padding-top: 5px;
   font-size: 12px;
@@ -153,33 +198,39 @@ export default {
 }
 .win10-menu .blocks {
   max-width: 770px;
-  width: calc(100% - 230px);
-  margin-top: 40px;
+  height: 100%;
+  width: calc(100% - 210px);
+  padding-top: 20px;
+  padding-bottom: 30px;
 }
 .win10-menu .list,
 .blocks {
   float: left;
-  width: 230px;
   height: 100%;
-  overflow: auto;
   -webkit-animation-duration: 0.5s;
   animation-duration: 0.5s;
 }
 
-.win10-menu .list .item, .sub-item {
-    color: white;
-    margin: 1px 0;
-    line-height: 40px;
-    padding: 0 10px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    transition: background-color 0.3s;
-    position: relative;
-    width: calc(100% - 20px);
+.scrollbar {
+  overflow: auto;
+  margin-bottom: 20px;
 }
-
-.win10-menu .list .item:hover, .sub-item:hover {
-background: rgba(189, 187, 187, 0.3);
+.scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
 }
-
+.scrollbar::-webkit-scrollbar-track {
+  background: #00000000;
+  border-radius: 2px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #747474;
+  border-radius: 2px;
+}
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+.scrollbar::-webkit-scrollbar-corner {
+  background: #00000000;
+}
 </style>
