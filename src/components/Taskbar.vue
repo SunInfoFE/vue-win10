@@ -93,6 +93,7 @@ export default {
   padding: 0 10px;
   transition: all 0.3s;
   float: left;
+  user-select: none;
 }
 .win10-taskbar-time:hover {
   background-color: rgba(106, 105, 100, 0.7);

@@ -6,8 +6,11 @@
           left: position.left + 'px',
           top: position.top + 'px'
         }">
-    <div class="win10-window-header" @mousedown="mousedown($event, 'move')">
-      <div class="win10-window-title" v-text="title"></div>
+    <div class="win10-window-header">
+      <div class="win10-window-title"
+           @mousedown="mousedown($event, 'move')"
+           v-text="title">
+      </div>
       <div class="win10-window-header-right">
         <win10-button
             icon="min"
@@ -156,6 +159,8 @@ export default {
 .win10-window-title {
   flex: 1;
   padding-left: 10px;
+  cursor: move;
+  user-select: none;
 }
 .win10-window-header-right .win10-button {
   float: left;
