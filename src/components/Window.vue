@@ -1,62 +1,142 @@
 <template>
-  <div class="win10-window">
-    <div class="win10-window-header" v-text="title"></div>
-    <div class="win10-window-body"></div>
-    <div class="win10-window-top-left"></div>
-    <div class="win10-window-top"></div>
-    <div class="win10-window-top-right"></div>
-    <div class="win10-window-right"></div>
-    <div class="win10-window-bottom-left"></div>
-    <div class="win10-window-bottom"></div>
-    <div class="win10-window-bottom-right"
-         :style="{right: bottomRight.right + 'px', bottom: bottomRight.bottom + 'px'}"
-         @mousedown="mousedown"
-         @mousemove="mousemove"
-         @mouseup="mouseup">
+  <div class="win10-window"
+       :style="{
+          width: size.width + 'px',
+          height: size.height + 'px',
+          left: position.left + 'px',
+          top: position.top + 'px'
+        }">
+    <div class="win10-window-header">
+      <div class="win10-window-title"
+           @mousedown="mousedown($event, 'move')"
+           v-text="title">
+      </div>
+      <div class="win10-window-header-right">
+        <win10-button
+            icon="min"
+            title="最小化">
+        </win10-button>
+        <win10-button
+            :icon="fullScreen ? 'window-restore' : 'window-max'"
+            title="最大化"
+            @click="handleZoom">
+        </win10-button>
+        <win10-button
+            icon="window-close"
+            title="关闭">
+        </win10-button>
+      </div>
     </div>
-    <div class="win10-window-left"></div>
+    <div class="win10-window-body"></div>
+    <div class="win10-window-top-left" @mousedown="mousedown($event, 'tl')"></div>
+    <div class="win10-window-top" @mousedown="mousedown($event, 'top')"></div>
+    <div class="win10-window-top-right" @mousedown="mousedown($event, 'tr')"></div>
+    <div class="win10-window-right" @mousedown="mousedown($event, 'right')"></div>
+    <div class="win10-window-bottom-left" @mousedown="mousedown($event, 'bl')"></div>
+    <div class="win10-window-bottom" @mousedown="mousedown($event, 'bottom')"></div>
+    <div class="win10-window-bottom-right" @mousedown="mousedown($event, 'br')"></div>
+    <div class="win10-window-left" @mousedown="mousedown($event, 'left')"></div>
   </div>
 </template>
 
 <script>
+let Win10Button = () => import('./Button');
+
 export default {
+  components: {
+    Win10Button
+  },
   props: {
     title: {
       type: String,
       default: 'Title'
+    },
+    minWidth: {
+      type: Number,
+      default: 200
+    },
+    minHeight: {
+      type: Number,
+      default: 200
     }
   },
   data () {
     return {
-      bottomRight: {
-        right: -8,
-        bottom: -8
+      size: {
+        width: 400,
+        height: 300
       },
-      temp: {
-        orgX: 0,
-        orgY: 0
-      }
+      position: {
+        left: 100,
+        top: 100
+      },
+      fullScreen: false
     };
   },
   methods: {
-    mousedown (e) {
-      this.temp.orgX = e.clientX;
-      this.temp.orgY = e.clientY;
-      console.log(e.clientX);
-      console.log(e.clientY);
+    mousedown (e, direction) {
+      let that = this;
+      let disX = e.clientX;
+      let disY = e.clientY;
+      document.onmousemove = function (e) {
+        if (direction === 'tl') {
+          that.size.width += (disX - e.clientX);
+          that.size.height += (disY - e.clientY);
+          if (that.size.width > that.minWidth) {
+            that.position.left -= (disX - e.clientX);
+          }
+          if (that.size.height > that.minHeight) {
+            that.position.top -= (disY - e.clientY);
+          }
+        } else if (direction === 'tr') {
+          that.size.width += (e.clientX - disX);
+          that.size.height += (disY - e.clientY);
+          if (that.size.height > that.minHeight) {
+            that.position.top -= (disY - e.clientY);
+          }
+        } else if (direction === 'bl') {
+          that.size.width += (disX - e.clientX);
+          that.size.height += (e.clientY - disY);
+          if (that.size.width > that.minWidth) {
+            that.position.left -= (disX - e.clientX);
+          }
+        } else if (direction === 'br') {
+          that.size.width += (e.clientX - disX);
+          that.size.height += (e.clientY - disY);
+        } else if (direction === 'move') {
+          that.position.left += (e.clientX - disX);
+          that.position.top += (e.clientY - disY);
+        } else if (direction === 'top') {
+          that.size.height += (disY - e.clientY);
+          if (that.size.height > that.minHeight) {
+            that.position.top -= (disY - e.clientY);
+          }
+        } else if (direction === 'right') {
+          that.size.width += (e.clientX - disX);
+        } else if (direction === 'bottom') {
+          that.size.height += (e.clientY - disY);
+        } else if (direction === 'left') {
+          that.size.width += (disX - e.clientX);
+          if (that.size.width > that.minWidth) {
+            that.position.left -= (disX - e.clientX);
+          }
+        }
+        disX = e.clientX;
+        disY = e.clientY;
+        if (that.size.width <= that.minWidth) {
+          that.size.width = that.minWidth;
+        }
+        if (that.size.height <= that.minHeight) {
+          that.size.height = that.minHeight;
+        }
+      };
+      document.onmouseup = function () {
+        document.onmousemove = null;
+        document.onmouseup = null;
+      };
     },
-    mousemove (e) {
-      // this.bottomRight.right = this.bottomRight.right + (e.clientX - this.temp.orgX);
-      // this.bottomRight.bottom = this.bottomRight.bottom + (e.clientY - this.temp.orgY);
-      // let x = e.clientX - this.temp.orgX;
-      // let y = e.clientY - this.temp.orgY;
-      console.log(e.clientX);
-      console.log(e.clientY);
-      console.log(e.clientX - this.temp.orgX);
-      console.log(e.clientY - this.temp.orgY);
-    },
-    mouseup (e) {
-      //
+    handleZoom () {
+      this.fullScreen = !this.fullScreen;
     }
   }
 };
@@ -64,20 +144,29 @@ export default {
 
 <style>
 .win10-window {
-  width: 800px;
-  height: 600px;
   background-color: #795da3;
   position: absolute;
-  top: 100px;
-  left: 100px;
   display: flex;
   flex-direction: column;
 }
 .win10-window-header {
-  height: 38px;
-  padding: 8px;
+  height: 40px;
+  line-height: 40px;
+  background-color: rgba(49, 49, 50, 0.9);
+  color: #fff;
+  display: flex;
+}
+.win10-window-title {
+  flex: 1;
+  padding-left: 10px;
+  cursor: move;
+  user-select: none;
+}
+.win10-window-header-right .win10-button {
+  float: left;
 }
 .win10-window-body {
+  background-color: #fff;
   flex: 1;
 }
 .win10-window-top-left {
@@ -130,10 +219,11 @@ export default {
 }
 .win10-window-bottom-right {
   position: absolute;
+  right: -8px;
+  bottom: -8px;
   width: 16px;
   height: 16px;
   cursor: nwse-resize;
-  background-color: #63a35c;
 }
 .win10-window-left {
   position: absolute;
