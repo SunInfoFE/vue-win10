@@ -1,5 +1,5 @@
 <template>
-  <div id="win10">
+  <div id="win10" class="win10" @click="handleClick">
     <win10-window></win10-window>
     <win10-menu></win10-menu>
     <win10-message></win10-message>
@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import getClassName from './utils/dom.js';
+
 let Win10Window = () => import(/* webpackChunkName: 'win10-window' */ './components/Window');
 let Win10Menu = () => import(/* webpackChunkName: 'win10-menu' */ './components/Menu');
 let Win10Message = () => import(/* webpackChunkName: 'win10-message' */ './components/Message');
@@ -20,6 +22,22 @@ export default {
     Win10Menu,
     Win10Message,
     Win10Taskbar
+  },
+  methods: {
+    handleClick (e) {
+      let isMessage = getClassName(e.target, 'win10-message');
+      let isMenu = getClassName(e.target, 'win10-menu');
+      let isBtnMenu = getClassName(e.target, 'win10-button win10-btn-menu');
+      let isBtnMessage = getClassName(e.target, 'win10-button win10-btn-message');
+      if ((isMessage === false) && (isMenu === false) && (isBtnMenu === false) && (isBtnMessage === false)) {
+        if (this.$store.state.showMenu === true) {
+          this.$store.commit('toggleWin');
+        }
+        if (this.$store.state.showMessage === true) {
+          this.$store.commit('toggleMessage');
+        }
+      }
+    }
   }
 };
 </script>

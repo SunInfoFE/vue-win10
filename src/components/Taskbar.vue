@@ -4,6 +4,7 @@
       <win10-button
           icon="windows"
           title="菜单"
+          class="win10-btn-menu"
           @click="handleWinBtn">
       </win10-button>
     </div>
@@ -15,6 +16,7 @@
       <win10-button
           icon="message"
           title="消息"
+          class="win10-btn-message"
           @click="handleMessageBtn">
       </win10-button>
       <div class="win10-taskbar-show-desktop" title="显示桌面"></div>
