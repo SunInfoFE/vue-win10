@@ -33,6 +33,13 @@ export default {
       shortcuts: ['资产管理', '资产监控', '授权策略', '访问规则', '告警统计', '我的待办', '系统设置', '资产巡检', '资产发现', '业务服务', '电视墙']
     };
   },
+  mounted: function () {
+    let that = this;
+    this.getWinSize();
+    window.onresize = function () {
+      that.getWinSize();
+    };
+  },
   methods: {
     handleClick (e) {
       let isMessage = getClassName(e.target, 'win10-message');
@@ -47,6 +54,12 @@ export default {
           this.$store.commit('toggleMessage');
         }
       }
+    },
+    getWinSize () {
+      this.$store.commit('setWinSize', {
+        width: document.body.clientWidth,
+        height: document.body.clientHeight
+      });
     }
   }
 };

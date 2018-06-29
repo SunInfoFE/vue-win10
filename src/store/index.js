@@ -6,7 +6,11 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     showMenu: false,
-    showMessage: false
+    showMessage: false,
+    winSize: {
+      width: 0,
+      height: 0
+    }
   },
   mutations: {
     toggleWin (state) {
@@ -16,6 +20,10 @@ const store = new Vuex.Store({
     toggleMessage (state) {
       state.showMenu = false;
       state.showMessage = !state.showMessage;
+    },
+    setWinSize (state, payload) {
+      state.winSize.width = payload.width;
+      state.winSize.height = payload.height;
     }
   }
 });
