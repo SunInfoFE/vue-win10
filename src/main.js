@@ -6,6 +6,9 @@ import store from './store';
 
 Vue.config.productionTip = false;
 
+Vue.component('assets-management', () => import(/* webpackChunkName: 'AssetsManagement' */ './business/AssetsManagement'));
+Vue.component('assets-monitor', () => import(/* webpackChunkName: 'AssetsMonitor' */ './business/AssetsMonitor'));
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

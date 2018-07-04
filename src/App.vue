@@ -1,9 +1,18 @@
 <template>
   <div id="win10" class="win10" @click="handleClick">
     <div class="win10-shortcut">
-      <win10-shortcut v-for="(item, index) in shortcuts" :name="item" :key="index"></win10-shortcut>
+      <win10-shortcut
+        v-for="(item, index) in shortcuts"
+        :obj="item"
+        :key="index"
+        @dblclick="handleDblclick">
+      </win10-shortcut>
     </div>
-    <win10-window></win10-window>
+    <win10-window
+      v-for="(item, index) in winArr"
+      :obj="item"
+      :key="index">
+    </win10-window>
     <win10-menu></win10-menu>
     <win10-message></win10-message>
     <win10-taskbar></win10-taskbar>
@@ -11,7 +20,8 @@
 </template>
 
 <script>
-import getClassName from './utils/dom.js';
+import {getClassName, getWinName} from './utils/dom.js';
+import {mapState} from 'vuex';
 
 let Win10Menu = () => import(/* webpackChunkName: 'win10-menu' */ './components/Menu');
 let Win10Message = () => import(/* webpackChunkName: 'win10-message' */ './components/Message');
@@ -30,8 +40,25 @@ export default {
   },
   data () {
     return {
-      shortcuts: ['资产管理', '资产监控', '授权策略', '访问规则', '告警统计', '我的待办', '系统设置', '资产巡检', '资产发现', '业务服务', '电视墙']
+      shortcuts: [
+        {name: 'assets-management', alt: '资产管理'},
+        {name: 'assets-monitor', alt: '资产监控'},
+        {name: '', alt: '授权策略'},
+        {name: '', alt: '访问规则'},
+        {name: '', alt: '告警统计'},
+        {name: '', alt: '我的待办'},
+        {name: '', alt: '系统设置'},
+        {name: '', alt: '资产巡检'},
+        {name: '', alt: '资产发现'},
+        {name: '', alt: '业务服务'},
+        {name: '', alt: '电视墙'}
+      ]
     };
+  },
+  computed: {
+    ...mapState([
+      'winArr'
+    ])
   },
   mounted: function () {
     let that = this;
@@ -46,6 +73,7 @@ export default {
       let isMenu = getClassName(e.target, 'win10-menu');
       let isBtnMenu = getClassName(e.target, 'win10-button win10-btn-menu');
       let isBtnMessage = getClassName(e.target, 'win10-button win10-btn-message');
+      // 控制菜单和消息展示隐藏
       if ((isMessage === false) && (isMenu === false) && (isBtnMenu === false) && (isBtnMessage === false)) {
         if (this.$store.state.showMenu === true) {
           this.$store.commit('toggleWin');
@@ -54,12 +82,22 @@ export default {
           this.$store.commit('toggleMessage');
         }
       }
+      // 控制win窗口的zIndex
+      let isWindow = getClassName(e.target, 'win10-window');
+      if (isWindow === true) {
+        this.$store.commit('setZIndex', {
+          name: getWinName(e.target, 'win10-window')
+        });
+      }
     },
     getWinSize () {
       this.$store.commit('setWinSize', {
         width: document.body.clientWidth,
         height: document.body.clientHeight
       });
+    },
+    handleDblclick (obj) {
+      this.$store.commit('newWin', obj);
     }
   }
 };

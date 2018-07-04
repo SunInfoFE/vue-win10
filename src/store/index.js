@@ -10,7 +10,9 @@ const store = new Vuex.Store({
     winSize: {
       width: 0,
       height: 0
-    }
+    },
+    winArr: [],
+    zIndex: 1001
   },
   mutations: {
     toggleWin (state) {
@@ -24,6 +26,36 @@ const store = new Vuex.Store({
     setWinSize (state, payload) {
       state.winSize.width = payload.width;
       state.winSize.height = payload.height;
+    },
+    newWin (state, payload) {
+      for (let i = 0; i < state.winArr.length; i++) {
+        if (state.winArr[i].name === payload.name) { // 如果当前业务已打开，则前置显示
+          state.winArr[i].zIndex = state.zIndex;
+          state.zIndex++;
+          state.winArr = JSON.parse(JSON.stringify(state.winArr));
+          return false;
+        }
+      }
+      // 当前业务未打开，需要打开
+      state.winArr.push({
+        name: payload.name,
+        alt: payload.alt,
+        zIndex: state.zIndex
+      });
+      state.zIndex++;
+    },
+    destroyWin (state, payload) {
+      state.winArr.splice(payload.index, 1);
+    },
+    setZIndex (state, payload) {
+      for (let i = 0; i < state.winArr.length; i++) {
+        if (state.winArr[i].name === payload.name) {
+          state.winArr[i].zIndex = state.zIndex;
+          state.zIndex++;
+          state.wiArr = JSON.parse(JSON.stringify(state.winArr));
+          return false;
+        }
+      }
     }
   }
 });

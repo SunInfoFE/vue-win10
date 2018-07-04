@@ -4,13 +4,15 @@
           width: (fullScreen ?  winWidth : size.width) + 'px',
           height: (fullScreen ? winHeight : size.height) + 'px',
           left: fullScreen ? 0 : (position.left + 'px'),
-          top: fullScreen ? 0 : (position.top + 'px')
-        }">
+          top: fullScreen ? 0 : (position.top + 'px'),
+          zIndex: obj.zIndex
+        }"
+        :data-name="obj.name">
     <div class="win10-window-header">
       <div class="win10-window-title"
            :class="{move: !fullScreen}"
            @mousedown="mousedown($event, 'move')"
-           v-text="title">
+           v-text="obj.alt">
       </div>
       <div class="win10-window-header-right">
         <win10-button
@@ -28,7 +30,9 @@
         </win10-button>
       </div>
     </div>
-    <div class="win10-window-body"></div>
+    <div class="win10-window-body">
+      <component :is="obj.name"></component>
+    </div>
     <div class="win10-window-top-left" @mousedown="mousedown($event, 'tl')" v-show="!fullScreen"></div>
     <div class="win10-window-top" @mousedown="mousedown($event, 'top')" v-show="!fullScreen"></div>
     <div class="win10-window-top-right" @mousedown="mousedown($event, 'tr')" v-show="!fullScreen"></div>
@@ -48,10 +52,6 @@ export default {
     Win10Button
   },
   props: {
-    title: {
-      type: String,
-      default: 'Title'
-    },
     minWidth: {
       type: Number,
       default: 200
@@ -59,6 +59,10 @@ export default {
     minHeight: {
       type: Number,
       default: 200
+    },
+    obj: {
+      type: Object,
+      required: true
     }
   },
   data () {
@@ -89,6 +93,9 @@ export default {
     winWidth: function () {
       return this.$store.state.winSize.width;
     }
+  },
+  mounted () {
+    console.log(this.obj);
   },
   methods: {
     mousedown (e, direction) {
