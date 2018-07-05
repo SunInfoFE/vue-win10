@@ -9,9 +9,9 @@
       </win10-shortcut>
     </div>
     <win10-window
-      v-for="(item, index) in winArr"
+      v-for="item in winArr"
       :obj="item"
-      :key="index">
+      :key="item.name">
     </win10-window>
     <win10-menu></win10-menu>
     <win10-message></win10-message>

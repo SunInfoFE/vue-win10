@@ -45,14 +45,19 @@ const store = new Vuex.Store({
       state.zIndex++;
     },
     destroyWin (state, payload) {
-      state.winArr.splice(payload.index, 1);
+      for (let i = 0; i < state.winArr.length; i++) {
+        if (state.winArr[i].name === payload.name) {
+          state.winArr.splice(i, 1);
+          return false;
+        }
+      }
     },
     setZIndex (state, payload) {
       for (let i = 0; i < state.winArr.length; i++) {
         if (state.winArr[i].name === payload.name) {
           state.winArr[i].zIndex = state.zIndex;
           state.zIndex++;
-          state.wiArr = JSON.parse(JSON.stringify(state.winArr));
+          state.winArr = JSON.parse(JSON.stringify(state.winArr));
           return false;
         }
       }

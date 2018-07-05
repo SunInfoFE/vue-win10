@@ -26,7 +26,8 @@
         </win10-button>
         <win10-button
             icon="window-close"
-            title="关闭">
+            title="关闭"
+            @click="handleClose">
         </win10-button>
       </div>
     </div>
@@ -179,6 +180,11 @@ export default {
         this.oldSize.height = this.size.height;
       }
       this.fullScreen = !this.fullScreen;
+    },
+    handleClose (e) {
+      this.$store.commit('destroyWin', {
+        name: getWinName(e.target, 'win10-window')
+      });
     }
   }
 };
