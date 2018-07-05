@@ -23,7 +23,7 @@ export default {
   background-color: rgba(19, 23, 28, 0.8);
   overflow-x: hidden;
   overflow-y: auto;
-  z-index: 8;
+  z-index: 9990;
   transition: all 0.5s;
 }
 </style>

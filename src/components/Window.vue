@@ -86,7 +86,7 @@ export default {
         left: 100,
         top: 100
       },
-      fullScreen: false
+      fullScreen: true
     };
   },
   computed: {
