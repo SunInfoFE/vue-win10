@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import {getWinName} from '../utils/dom.js';
+
 let Win10Button = () => import('./Button');
 
 export default {
@@ -94,11 +96,14 @@ export default {
       return this.$store.state.winSize.width;
     }
   },
-  mounted () {
-    console.log(this.obj);
-  },
+  mounted () {},
   methods: {
     mousedown (e, direction) {
+      // 不仅click时需要设置当前window的zIndex
+      this.$store.commit('setZIndex', {
+        name: getWinName(e.target, 'win10-window')
+      });
+      // 处理window调整大小
       if (this.fullScreen === false) {
         let that = this;
         let disX = e.clientX;
