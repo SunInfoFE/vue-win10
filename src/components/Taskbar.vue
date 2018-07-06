@@ -9,7 +9,11 @@
       </win10-button>
     </div>
     <div class="win10-taskbar-group-middle">
-      <div class="win10-a"></div>
+      <win10-thumbnail
+          v-for="item in winArr"
+          :obj="item"
+          :key="item.name">
+      </win10-thumbnail>
     </div>
     <div class="win10-taskbar-group-right">
       <div class="win10-taskbar-time" v-html="display"></div>
@@ -25,11 +29,15 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
+
 let Win10Button = () => import(/* webpackChunkName: 'win10-button' */ './Button');
+let Win10Thumbnail = () => import(/* webpackChunkName: 'win10-thumbnail' */ './Thumbnail');
 
 export default {
   components: {
-    Win10Button
+    Win10Button,
+    Win10Thumbnail
   },
   data () {
     return {
@@ -37,6 +45,9 @@ export default {
     };
   },
   computed: {
+    ...mapState([
+      'winArr'
+    ]),
     display () {
       let date = new Date(this.time);
       let yyyy = date.getFullYear();
@@ -76,7 +87,7 @@ export default {
   position: fixed;
   bottom: 0;
   background-color: rgba(19, 23, 28, 0.9);
-  z-index: 999;
+  z-index: 9990;
   display: flex
 }
 .win10-taskbar .win10-button {
