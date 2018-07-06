@@ -15,7 +15,7 @@ const store = new Vuex.Store({
     zIndex: 1001
   },
   mutations: {
-    toggleWin (state) {
+    toggleMenu (state) {
       state.showMessage = false;
       state.showMenu = !state.showMenu;
     },
@@ -30,6 +30,12 @@ const store = new Vuex.Store({
     newWin (state, payload) {
       for (let i = 0; i < state.winArr.length; i++) {
         if (state.winArr[i].name === payload.name) { // 如果当前业务已打开，则前置显示
+          // 当前窗口是否最小化
+          let dom = document.querySelector(`[data-name=${payload.name}]`);
+          if (dom.style.display === 'none') {
+            dom.style.display = 'block';
+          }
+          // 处理zIndex
           state.winArr[i].zIndex = state.zIndex;
           state.zIndex++;
           state.winArr = JSON.parse(JSON.stringify(state.winArr));
@@ -43,6 +49,22 @@ const store = new Vuex.Store({
         zIndex: state.zIndex
       });
       state.zIndex++;
+    },
+    toggleWin (state, payload) { // 任务栏 thumbnail 点击处理
+      for (let i = 0; i < state.winArr.length; i++) {
+        if (state.winArr[i].name === payload.name) {
+          let dom = document.querySelector(`[data-name=${payload.name}]`);
+          if (dom.style.display === 'none') {
+            dom.style.display = 'block';
+            state.winArr[i].zIndex = state.zIndex;
+            state.zIndex++;
+            state.winArr = JSON.parse(JSON.stringify(state.winArr));
+          } else {
+            dom.style.display = 'none';
+          }
+          return false;
+        }
+      }
     },
     destroyWin (state, payload) {
       for (let i = 0; i < state.winArr.length; i++) {

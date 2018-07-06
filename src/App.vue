@@ -76,7 +76,7 @@ export default {
       // 控制菜单和消息展示隐藏
       if ((isMessage === false) && (isMenu === false) && (isBtnMenu === false) && (isBtnMessage === false)) {
         if (this.$store.state.showMenu === true) {
-          this.$store.commit('toggleWin');
+          this.$store.commit('toggleMenu');
         }
         if (this.$store.state.showMessage === true) {
           this.$store.commit('toggleMessage');

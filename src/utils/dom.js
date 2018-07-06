@@ -18,4 +18,13 @@ function getWinName (dom, className) {
   }
 }
 
-export {getClassName, getWinName};
+function getDom (dom, className) {
+  let _className = dom.className;
+  if (_className === className) {
+    return dom;
+  } else {
+    return getDom(dom.parentNode, className);
+  }
+}
+
+export {getClassName, getDom, getWinName};

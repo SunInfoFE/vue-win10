@@ -1,5 +1,9 @@
 <template>
-  <div class="win10-thumbnail" :style="{width: width}">{{obj.alt}}</div>
+  <div
+      class="win10-thumbnail"
+      :style="{width: width}"
+      @click="handleClick(obj.name)"
+  >{{obj.alt}}</div>
 </template>
 
 <script>
@@ -19,6 +23,13 @@ export default {
     width: function () {
       let per = 100 / (this.winArr.length);
       return `calc(${per}% - 1px)`;
+    }
+  },
+  methods: {
+    handleClick (name) {
+      this.$store.commit('toggleWin', {
+        name: name
+      });
     }
   }
 };

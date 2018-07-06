@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     handleWinBtn () {
-      this.$store.commit('toggleWin');
+      this.$store.commit('toggleMenu');
     },
     handleMessageBtn () {
       this.$store.commit('toggleMessage');

@@ -17,7 +17,8 @@
       <div class="win10-window-header-right">
         <win10-button
             icon="min"
-            title="最小化">
+            title="最小化"
+            @click="handleMinimize">
         </win10-button>
         <win10-button
             :icon="fullScreen ? 'window-restore' : 'window-max'"
@@ -46,7 +47,7 @@
 </template>
 
 <script>
-import {getWinName} from '../utils/dom.js';
+import {getDom, getWinName} from '../utils/dom.js';
 
 let Win10Button = () => import('./Button');
 
@@ -168,6 +169,7 @@ export default {
       }
     },
     handleZoom () {
+      this.$el.style.transition = 'all 0.3s';
       if (this.fullScreen === true) {
         this.position.left = this.oldPosition.left;
         this.position.top = this.oldPosition.top;
@@ -180,11 +182,19 @@ export default {
         this.oldSize.height = this.size.height;
       }
       this.fullScreen = !this.fullScreen;
+      let that = this;
+      setTimeout(function () {
+        that.$el.style.transition = 'all 0s';
+      }, 500);
     },
     handleClose (e) {
       this.$store.commit('destroyWin', {
         name: getWinName(e.target, 'win10-window')
       });
+    },
+    handleMinimize (e) {
+      let dom = getDom(e.target, 'win10-window');
+      dom.style.display = 'none';
     }
   }
 };
@@ -194,8 +204,6 @@ export default {
 .win10-window {
   background-color: #795da3;
   position: absolute;
-  display: flex;
-  flex-direction: column;
 }
 .win10-window-header {
   height: 40px;
@@ -217,7 +225,7 @@ export default {
 }
 .win10-window-body {
   background-color: #fff;
-  flex: 1;
+  height: calc(100% - 40px);
 }
 .win10-window-top-left {
   position: absolute;
