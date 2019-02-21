@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {getClassName, getWinName} from './utils/dom.js';
+import {getClassName, getWinName} from './utils/dom';
 import {mapState} from 'vuex';
 
 let Win10Menu = () => import(/* webpackChunkName: 'win10-menu' */ './components/Menu');

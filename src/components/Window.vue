@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import {getDom, getWinName} from '../utils/dom.js';
+import {getDom, getWinName} from '../utils/dom';
 
 let Win10Button = () => import('./Button');
 
