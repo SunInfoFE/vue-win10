@@ -1,16 +1,26 @@
 <template>
-  <div class="win10-shortcut-item">
-    <img src="../assets/logo.png" :alt="name">
-    <div v-text="name"></div>
+  <div class="win10-shortcut-item" @dblclick="handleDblclick(obj)">
+    <img src="../assets/logo.png" :alt="obj.alt">
+    <div v-text="obj.alt"></div>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    name: {
-      type: String,
-      default: '快捷方式'
+    obj: {
+      type: Object,
+      default: function () {
+        return {
+          name: '',
+          alt: '快捷方式'
+        };
+      }
+    }
+  },
+  methods: {
+    handleDblclick (obj) {
+      this.$emit('dblclick', obj);
     }
   }
 };

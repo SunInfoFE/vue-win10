@@ -9,4 +9,22 @@ function getClassName (dom, className) {
   }
 }
 
-export default getClassName;
+function getWinName (dom, className) {
+  let _className = dom.className;
+  if (_className === className) {
+    return dom.getAttribute('data-name');
+  } else {
+    return getWinName(dom.parentNode, className);
+  }
+}
+
+function getDom (dom, className) {
+  let _className = dom.className;
+  if (_className === className) {
+    return dom;
+  } else {
+    return getDom(dom.parentNode, className);
+  }
+}
+
+export {getClassName, getDom, getWinName};
