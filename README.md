@@ -30,5 +30,9 @@
 
 ### 技术点
 
-* 使用了 webpack 实现了 代码分离、动态导入。
-![示例截图](https://github.com/SunInfoFE/vue-win10/blob/master/vue-win10-demo2.png)
+* 使用了`webpack`实现了 代码分离、动态导入、自定义chunkName。
+
+    ![示例截图](https://github.com/SunInfoFE/vue-win10/blob/master/vue-win10-demo2.png)
+
+* 使用`Vuex`管理各个组件的交互和状态。
+* 图标平台：iconfont
