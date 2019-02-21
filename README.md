@@ -1,5 +1,11 @@
 # vue-win10
 
+### 示例页
+
+[http://sunflower.xweb.xin/vue-win10/dist/index.html](http://sunflower.xweb.xin/vue-win10/dist/index.html)
+
+![示例截图](https://github.com/SunInfoFE/vue-win10/blob/master/vue-win10-demo1.png)
+
 ### 功能
 
 - [x] 消息栏的展示隐藏
@@ -22,3 +28,7 @@
 
 - [ ] 菜单 By@haise
 
+### 技术点
+
+* 使用了 webpack 实现了 代码分离、动态导入。
+![示例截图](https://github.com/SunInfoFE/vue-win10/blob/master/vue-win10-demo2.png)
