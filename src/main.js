@@ -4,7 +4,12 @@ import Vue from 'vue';
 import App from './App';
 import store from './store';
 
-Vue.config.productionTip = false;
+// 以下三行是右键菜单
+import ContextMenu from '@/components/ContextMenu';
+import './components/ContextMenu/style/css/font-awesome.min.css';
+
+Vue.config.productionTip = false; ;
+Vue.use(ContextMenu);
 
 Vue.component('assets-management', () => import(/* webpackChunkName: 'AssetsManagement' */ './business/AssetsManagement'));
 Vue.component('assets-monitor', () => import(/* webpackChunkName: 'AssetsMonitor' */ './business/AssetsMonitor'));
