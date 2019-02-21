@@ -28,7 +28,7 @@ module.exports = {
 
     // 风格约束
     // 缩进为2个空格
-    // 'indent': [1, 2],
+    'indent': [1, 2, { 'SwitchCase': 1 }],
     // 键名和冒号之前不能有空格，冒号和键值间至少一个空格
     'key-spacing': [1, {
       'beforeColon': false,
@@ -41,7 +41,7 @@ module.exports = {
     // 句末需要分号
     'semi': [1, 'always'],
     // // 方法括号前要有空格
-    // 'space-before-function-paren': [1, 'always'],
+    'space-before-function-paren': [1, 'always'],
 
     // ES6
     // 箭头函数的参数必须使用圆括号
