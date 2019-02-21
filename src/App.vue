@@ -43,15 +43,15 @@ export default {
       shortcuts: [
         {name: 'assets-management', alt: '资产管理'},
         {name: 'assets-monitor', alt: '资产监控'},
-        {name: '', alt: '授权策略'},
-        {name: '', alt: '访问规则'},
-        {name: '', alt: '告警统计'},
-        {name: '', alt: '我的待办'},
-        {name: '', alt: '系统设置'},
-        {name: '', alt: '资产巡检'},
-        {name: '', alt: '资产发现'},
-        {name: '', alt: '业务服务'},
-        {name: '', alt: '电视墙'}
+        {name: 'auth-type', alt: '授权策略'},
+        {name: 'auth-rule', alt: '访问规则'},
+        {name: 'alarm-ct', alt: '告警统计'},
+        {name: 'my-todo', alt: '我的待办'},
+        {name: 'sys-set', alt: '系统设置'},
+        {name: 'assets-afa', alt: '资产巡检'},
+        {name: 'assets-find', alt: '资产发现'},
+        {name: 'business-service', alt: '业务服务'},
+        {name: 'tv-wall', alt: '电视墙'}
       ]
     };
   },

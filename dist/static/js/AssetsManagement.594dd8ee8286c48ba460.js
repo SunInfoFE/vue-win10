@@ -1,0 +1,2 @@
+webpackJsonp([4],{fLah:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var s={render:function(){var e=this.$createElement;return(this._self._c||e)("div",{staticClass:"assets-management"},[this._v("资产管理")])},staticRenderFns:[]};var a=n("VU/8")({},s,!1,function(e){n("fmYT")},null,null);t.default=a.exports},fmYT:function(e,t){}});
+//# sourceMappingURL=AssetsManagement.594dd8ee8286c48ba460.js.map

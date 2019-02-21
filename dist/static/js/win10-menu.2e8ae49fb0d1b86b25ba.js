@@ -1,0 +1,2 @@
+webpackJsonp([2],{"U+cD":function(t,e){},ccZh:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var s={render:function(){var t=this.$createElement;return(this._self._c||t)("div",{staticClass:"win10-menu",style:{bottom:this.bottom}},[this._v(" menu")])},staticRenderFns:[]};var o=n("VU/8")({computed:{bottom:function(){return this.$store.state.showMenu?"0":"-480px"}}},s,!1,function(t){n("U+cD")},null,null);e.default=o.exports}});
+//# sourceMappingURL=win10-menu.2e8ae49fb0d1b86b25ba.js.map
